@@ -95,7 +95,6 @@ LABEL name="Python Application" \
      maintainer="Mahmodd Sultan <m.sultan@arhamsoft.com>" \
      summary="A Sample Python application"
 
-# Create app directory
 
 WORKDIR /app
 
