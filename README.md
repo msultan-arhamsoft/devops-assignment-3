@@ -79,7 +79,18 @@ ENTRYPOINT:
 
 ### Improve the Dockerfile for python Application given in slides using the Dockerfile & then improve it and share image size & estimated build time for it ###
 
-----
+FROM python:3.6-alpine as msultan
+RUN pip install flask
+
+FROM msultan
+LABEL name="Python Application" \   
+     maintainer="Mahmodd Sultan <m.sultan@arhamsoft.com>" \
+     summary="A Sample Python application"
+# Create app directory
+WORKDIR /app
+COPY app.py ./
+EXPOSE 8080
+CMD [ "python", "./app.py" ]
 
 ### Run mysql container using the official image, by persisting data and passing environment variables to set username & passwordâ€¦ You can see the information of how to persist and information here ### 
 
