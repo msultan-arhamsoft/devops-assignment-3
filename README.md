@@ -3,22 +3,28 @@
 
 ### Build the images for Microservices (remember to edit code for frontend) and push images to Dockerhub and write commands to run backedn & frontend and they should run fine ###
 
-- Build the image for python (backend) app.
+- Build the image for python (backend) app:
+
 docker image build -t mahmoodsultan/devops-assignment-3:backend-app .
 
-- Build the image for node (frontend) app.
+- Build the image for node (frontend) app: 
+
 docker image build -t mahmoodsultan/devops-assignment-3:frontend-app .
 
 - Create the network to run the both apps on:
+
 docker netwok create assignment-3
 
-- Start the backend
+- Start the backend: 
+
 docker run -it --rm --name backend --network assignment-3 --init -p 9090:8080 mahmoodsultan/devops-assignment-3:backend-app
 
-- Start the frontend
+- Start the frontend: 
+
 docker run -it --rm --name frontend  --network assignment-3 --init -p 9091:8080 mahmoodsultan/devops-assignment-3:frontend-app
 
-- Accessing the frontend works well, because both containers are communicating through the same network.
+- Accessing the frontend works well, because both containers are communicating through the same network:
+
 localhost:9091/hello
 localhost:9091/instructor/{id} =>  id=1/2
 localhost:9091/student{id} => id=1/2/3/4/5/6/7
@@ -80,31 +86,41 @@ ENTRYPOINT:
 ### Improve the Dockerfile for python Application given in slides using the Dockerfile & then improve it and share image size & estimated build time for it ###
 
 FROM python:3.6-alpine as msultan
+
 RUN pip install flask
 
 FROM msultan
+
 LABEL name="Python Application" \   
      maintainer="Mahmodd Sultan <m.sultan@arhamsoft.com>" \
      summary="A Sample Python application"
+
 # Create app directory
+
 WORKDIR /app
+
 COPY app.py ./
+
 EXPOSE 8080
+
 CMD [ "python", "./app.py" ]
 
 ### Run mysql container using the official image, by persisting data and passing environment variables to set username & passwordâ€¦ You can see the information of how to persist and information here ### 
 
 https://hub.docker.com/_/mysql
 
-- Create volume named mysql, in order to persist the data using docker volume.
+- Create volume named mysql, in order to persist the data using docker volume: 
+
 docker volume create mysql
 
-- Run mysql container with username = msultan and password = mahmoodSultanSecret, in the detached mode with the data persisted.
+- Run mysql container with username = msultan and password = mahmoodSultanSecret, in the detached mode with the data persisted: 
 
 docker container run --name mysql-server -v mysql:/var/lib/mysql -e "MYSQL_USER=msultan" -e "MYSQL_PASSWORD=mahmoodSultanSecret" -d mysql
 
 - check docker container status: 
+
 docker container ls
 
-- check docker container logs
+- check docker container logs: 
+
 docker container logs mysql-server
